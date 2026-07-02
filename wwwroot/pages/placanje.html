@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plaćanje - MajstorBob</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div id="meni-container"></div>
+
+<div class="container mt-4"> 
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="kartica-crvena p-4">
+                <div class="text-center mb-4">
+                    <i class="fa-solid fa-credit-card fa-3x ikonica-zuta"></i>
+                    <h2 class="tekst-zut mt-2">Sigurno plaćanje</h2>
+                    <p class="tekst-zut" id="uslugaInfo">Plaćanje usluge</p>
+                </div>
+
+                <div id="alertMessage"></div>
+
+                <div class="kartica-preview mb-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <i class="fa-solid fa-credit-card fa-2x ikonica-zuta"></i>
+                        <i class="fa-brands fa-cc-visa fa-2x ikonica-zuta"></i>
+                    </div>
+                    <div class="kartica-broj text-center mb-3" id="karticaPreview">•••• •••• •••• ••••</div>
+                    <div class="d-flex justify-content-between">
+                        <div class="kartica-ime" id="imePreview">IME PREZIME</div>
+                        <div class="kartica-datum" id="datumPreview">MM/GG</div>
+                    </div>
+                </div>
+
+                <form id="paymentForm">
+                    <input type="hidden" id="zakazivanjeId">
+                    <input type="hidden" id="iznos">
+
+                    <div class="placanje-summary text-center mb-4">
+                        <label class="oznaka-polja">Ukupan iznos (RSD):</label>
+                        <div class="display-4 fw-bold tekst-crven" id="prikazIznosa">0 RSD</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="oznaka-polja">Broj kartice</label>
+                        <input type="text" id="brojKartice" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="oznaka-polja">Datum isteka</label>
+                            <input type="text" id="datumIsteka" class="form-control" placeholder="MM/GG" maxlength="5" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="oznaka-polja">CVV/CVC</label>
+                            <input type="password" id="cvv" class="form-control" placeholder="***" maxlength="4" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="oznaka-polja">Ime na kartici</label>
+                        <input type="text" id="imeNaKartici" class="form-control" placeholder="Ime Prezime" required>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="button" id="otkaziPlacanje" class="btn dugme w-100">
+                            <i class="fa-solid fa-circle-arrow-left"></i> Otkaži
+                        </button>
+                        <button type="submit" class="btn dugme w-100">
+                            <i class="fa-solid fa-credit-card"></i> Plati
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/placanje.js"></script>
+<script src="../js/api.js"></script>
+
+</body>
+</html>

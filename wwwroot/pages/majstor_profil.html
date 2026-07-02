@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil majstora - MajstorBob</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div id="meni-container"></div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="kartica-crvena text-center">
+                <img id="majstorAvatar" class="profil-avatar">
+                <h3 id="majstorImePrezime" class="tekst-zut">-</h3>
+                <p id="majstorKategorija" class="tekst-zut">-</p>
+                <div id="verifikovanBadgeMajstor" class="mb-2"></div>
+                <div id="majstorOcena" class="mb-3 tekst-zut">-</div>
+                <div class="mt-3">
+                    <a id="zakaziBtn" href="#" class="btn dugme w-100 mb-2"><i class="fa-solid fa-calendar-check"></i> Zakažite uslugu</a>
+                    <a id="oceniBtn" href="#" class="btn dugme w-100"><i class="fa-solid fa-star"></i> Ocenite majstora</a>
+                    <button id="prijaviBtn" class="btn dugme w-100 mt-2" onclick="otvoriModalPrijavu()">
+                        <i class="fa-solid fa-flag"></i> Prijavi majstora
+                    </button>
+                    <button id="zapocniChatBtn" class="btn dugme w-100 mt-2">
+                        <i class="fa-solid fa-comment"></i> Započni razgovor
+                    </button>
+                    <button id="mojiTerminiBtn" class="btn dugme w-100 mt-2" style="display: none;">
+                        <i class="fa-solid fa-calendar-check"></i> Moji termini
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="desna-kartica">
+                <h4 class="mb-4 text-center tekst-crven">O majstoru</h4>
+                <div id="firmaNazivRed" style="display: none;">
+                    <div class="info-red">
+                        <span class="oznaka-polja"></i> Naziv firme:</span>
+                        <span id="infoNazivFirme" class="tekst-crven">-</span>
+                    </div>
+                </div>
+                <div class="info-red">
+                    <span class="oznaka-polja">Ime i prezime:</span>
+                    <span id="infoImePrezime" class="tekst-crven">-</span>
+                </div>
+                <div class="info-red">
+                    <span class="oznaka-polja">Lokacija:</span>
+                    <span id="infoLokacija" class="tekst-crven">-</span>
+                </div>
+                <div class="info-red">
+                    <span class="oznaka-polja">Radno vreme:</span>
+                    <span id="infoRadnoVreme" class="tekst-crven">-</span>
+                </div>
+                <div class="mt-3">
+                    <h5 class="oznaka-polja">Opis usluga</h5>
+                    <p id="infoOpis" class="tekst-crven mt-2">-</p>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="desna-kartica">
+                <h4 class="mb-3 text-center tekst-crven">Ocene po kategorijama</h4>
+                <div class="info-red">
+                    <span class="oznaka-polja">Cena usluge:</span>
+                    <span class="tekst-crven" id="ocenaCena">-</span>
+                </div>
+                <div class="info-red">
+                    <span class="oznaka-polja">Kvalitet rada:</span>
+                    <span class="tekst-crven" id="ocenaKvalitet">-</span>
+                </div>
+                <div class="info-red">
+                    <span class="oznaka-polja">Brzina izvršenja:</span>
+                    <span class="tekst-crven" id="ocenaBrzina">-</span>
+                </div>
+                <div class="info-red">
+                    <span class="oznaka-polja">Odnos prema klijentu:</span>
+                    <span class="tekst-crven" id="ocenaOdnos">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="desna-kartica">
+                <h4 class="mb-3 text-center tekst-crven">Recenzije korisnika</h4>
+                <div id="recenzijeLista"><div class="text-center py-3 tekst-crven">Učitavanje...</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ZA PRIJAVU -->
+<div id="modalPrijava" class="modal-prijava">
+    <div class="modal-content">
+        <div class="desna-kartica p-3">
+            <div class="p-4">
+                <h5 id="modalPrijavaNaslov" class="mb-3 tekst-crven"><i class="fa-solid fa-flag"></i> Prijava majstora</h5>
+                <p id="prijavaMajstorIme" class="tekst-crven mb-3"></p>
+                <div class="mb-3">
+                    <label class="oznaka-polja">Razlog prijave:</label>
+                    <textarea id="prijavaRazlog" class="form-control" rows="4" placeholder="Opišite problem..."></textarea>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn dugme" onclick="zatvoriModalPrijavu()"><i class="fa-solid fa-circle-arrow-left"></i> Otkaži</button>
+                    <button class="btn dugme" onclick="posaljiPrijavu()"><i class="fa-solid fa-paper-plane"></i> Pošalji</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="../js/majstor_profil.js"></script>
+<script src="../js/api.js"></script>
+</body>
+</html>

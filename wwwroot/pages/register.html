@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registracija - MajstorBob</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div id="meni-container"></div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="kartica-registracija">
+                <div class="text-center mb-4">
+                    <i class="fa-solid fa-user-plus fa-3x ikonica-crvena"></i>
+                    <h2 class="mt-2 tekst-crven">Registracija</h2>
+                    <p class="tekst-dobrodoslica mt-2">Napravite novi nalog</p>
+                </div>
+
+                <div id="alertMessage"></div>
+
+                <form id="registerForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label oznaka-polja">Ime</label>
+                            <input type="text" id="ime" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label oznaka-polja">Prezime</label>
+                            <input type="text" id="prezime" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label oznaka-polja">Email adresa</label>
+                        <input type="email" id="email" class="form-control" placeholder="vas@email.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label oznaka-polja">Telefon</label>
+                        <input type="tel" id="telefon" class="form-control" placeholder="06********">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label oznaka-polja">Lozinka</label>
+                            <input type="password" id="password" class="form-control" placeholder="******" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label oznaka-polja">Potvrdi lozinku</label>
+                            <input type="password" id="confirmPassword" class="form-control" placeholder="******" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3"> 
+                        <label class="form-label oznaka-polja">Tip naloga</label>
+                        <select id="tipNaloga" class="form-select" required>
+                            <option value="">Izaberite</option>
+                            <option value="klijent">Klijent (tražim majstora)</option>
+                            <option value="majstor">Majstor (pružam usluge)</option>
+                            <option value="firma">Firma (pružamo usluge)</option>
+                        </select>
+                    </div>
+
+                    <div id="majstorPoljaReg" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label oznaka-polja">Kategorije usluge</label>
+                            <p class="tekst-crven small">Izaberite glavnu kategoriju, pa zatim podkategorije</p>
+                            <div id="kategorijeContainerMajstor" class="kategorije-hijerarhija">
+                                <div class="text-center tekst-crven">Učitavanje kategorija...</div>
+                            </div>
+                            <div id="izabraneKategorijeMajstor" class="mt-2">
+                                <small class="tekst-crven">Izabrane kategorije: <span id="prikazIzabranihMajstor">nijedna</span></small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label oznaka-polja">Početak radnog vremena</label>
+                                <input type="time" id="pocetakRadnogVremena" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label oznaka-polja">Kraj radnog vremena</label>
+                                <input type="time" id="krajRadnogVremena" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="firmaPoljaReg" style="display: none;">
+                        <div class="mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label oznaka-polja">Naziv firme</label>
+                                <input type="text" id="naziv_firme" class="form-control">
+                            </div>
+                            <label class="form-label oznaka-polja">Kategorije usluge</label>
+                            <p class="tekst-crven small">Izaberite glavnu kategoriju, pa zatim podkategorije</p>
+                            <div id="kategorijeContainerFirma" class="kategorije-hijerarhija">
+                                <div class="text-center tekst-crven">Učitavanje kategorija...</div>
+                            </div>
+                            <div id="izabraneKategorijeFirma" class="mt-2">
+                                <small class="tekst-crven">Izabrane kategorije: <span id="prikazIzabranihFirma">nijedna</span></small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label oznaka-polja">Broj radnika (ukupno)</label>
+                                <input type="number" id="br_radnika_uk" class="form-control" min="1" value="1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label oznaka-polja">Broj radnika (dostupno)</label>
+                                <input type="number" id="br_radnika_dost" class="form-control" min="0" value="0">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label oznaka-polja">Početak radnog vremena</label>
+                                <input type="time" id="pocetakRadnogVremenaFirma" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label oznaka-polja">Kraj radnog vremena</label>
+                                <input type="time" id="krajRadnogVremenaFirma" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="termsCheckbox" required>
+                        <label class="form-check-label oznaka-checkbox" for="termsCheckbox">Slažem se sa uslovima korišćenja</label>
+                    </div>
+
+                    <button type="submit" class="btn dugme w-100">Registruj se</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a href="login.html" class="link-crveni">Već imate nalog? Prijavite se</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+<script src="../js/main.js"></script>
+<script src="../js/api.js"></script>
+
+<script>
+    let sveKategorije = [];
+    
+
+    async function ucitajKategorijeHijerarhija(containerId) {
+        try {
+            const kategorije = await getKategorije();
+            sveKategorije = kategorije;
+            console.log('Sve kategorije iz API-ja:', kategorije);
+            
+            const glavne = sveKategorije.filter(k => k.id_roditelja === null);
+            
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            
+            if (glavne.length === 0) {
+                container.innerHTML = '<div class="tekst-crven">Nema dostupnih kategorija</div>';
+                return;
+            }
+            
+            for (let g of glavne) {
+                const divGlavna = document.createElement('div');
+                divGlavna.className = 'kategorija-glavna';
+                
+                const naslovGlavna = document.createElement('div');
+                naslovGlavna.className = 'kategorija-glavna-naslov';
+                naslovGlavna.textContent = g.naziv_kategorije;
+                naslovGlavna.dataset.id = g.id_kategorije;
+                divGlavna.appendChild(naslovGlavna);
+                
+                const podkategorije = sveKategorije.filter(k => k.id_roditelja === g.id_kategorije);
+                
+                if (podkategorije.length > 0) {
+                    const divDrugiNivo = document.createElement('div');
+                    divDrugiNivo.className = 'kategorija-drugi-nivo';
+                    divDrugiNivo.id = 'nivo2_' + g.id_kategorije;
+                    divDrugiNivo.classList.add('kategorija-sakriveno');
+                    
+                    for (let p of podkategorije) {
+                        const potomci = sveKategorije.filter(k => k.id_roditelja === p.id_kategorije);
+                        
+                        if (potomci.length > 0) {
+                            const divRoditelj = document.createElement('div');
+                            divRoditelj.className = 'kategorija-drugi-nivo-roditelj';
+                            
+                            const naslovRoditelj = document.createElement('div');
+                            naslovRoditelj.className = 'kategorija-drugi-nivo-naslov';
+                            naslovRoditelj.textContent = p.naziv_kategorije;
+                            naslovRoditelj.dataset.id = p.id_kategorije;
+                            divRoditelj.appendChild(naslovRoditelj);
+                            
+                            const divTreciNivo = document.createElement('div');
+                            divTreciNivo.className = 'kategorija-treci-nivo';
+                            divTreciNivo.id = 'nivo3_' + p.id_kategorije;
+                            divTreciNivo.classList.add('kategorija-sakriveno');
+                            
+                            for (let u of potomci) {
+                                const labelUnuk = document.createElement('label');
+                                const cbUnuk = document.createElement('input');
+                                cbUnuk.type = 'checkbox';
+                                cbUnuk.value = u.id_kategorije;
+                                cbUnuk.className = 'kategorija-checkbox';
+                                cbUnuk.dataset.id = u.id_kategorije;
+                                
+                                labelUnuk.appendChild(cbUnuk);
+                                labelUnuk.appendChild(document.createTextNode(' ' + u.naziv_kategorije));
+                                divTreciNivo.appendChild(labelUnuk);
+                            }
+                            
+                            divRoditelj.appendChild(divTreciNivo);
+                            divDrugiNivo.appendChild(divRoditelj);
+                            
+                        } else {
+                            const labelPod = document.createElement('label');
+                            const cbPod = document.createElement('input');
+                            cbPod.type = 'checkbox';
+                            cbPod.value = p.id_kategorije;
+                            cbPod.className = 'kategorija-checkbox';
+                            cbPod.dataset.id = p.id_kategorije;
+                            
+                            labelPod.appendChild(cbPod);
+                            labelPod.appendChild(document.createTextNode(' ' + p.naziv_kategorije));
+                            divDrugiNivo.appendChild(labelPod);
+                        }
+                    }
+                    
+                    divGlavna.appendChild(divDrugiNivo);
+                }
+                
+                container.appendChild(divGlavna);
+            }
+            
+            dodajEventListenereKategorija(containerId);
+            
+        } catch (error) {
+            console.error('Greska:', error);
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.innerHTML = '<div class="tekst-crven">Greska pri ucitavanju kategorija</div>';
+            }
+        }
+    }
+
+    function dodajEventListenereKategorija(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        container.querySelectorAll('.kategorija-glavna-naslov').forEach(naslov => {
+            naslov.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const drugiNivo = document.getElementById('nivo2_' + id);
+                if (drugiNivo) {
+                    drugiNivo.classList.toggle('kategorija-sakriveno');
+                    this.classList.toggle('otvoreno');
+                }
+            });
+        });
+        
+        container.querySelectorAll('.kategorija-drugi-nivo-naslov').forEach(naslov => {
+            naslov.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const id = this.dataset.id;
+                const treciNivo = document.getElementById('nivo3_' + id);
+                if (treciNivo) {
+                    treciNivo.classList.toggle('kategorija-sakriveno');
+                    this.classList.toggle('otvoreno');
+                }
+            });
+        });
+        
+        container.querySelectorAll('.kategorija-checkbox').forEach(cb => {
+            cb.addEventListener('change', function() {
+                azurirajPrikazIzabranih(containerId);
+            });
+        });
+    }
+
+    function azurirajPrikazIzabranih(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        const checked = container.querySelectorAll('.kategorija-checkbox:checked');
+        
+        let prikazSpan;
+        if (containerId === 'kategorijeContainerMajstor') {
+            prikazSpan = document.getElementById('prikazIzabranihMajstor');
+        } else if (containerId === 'kategorijeContainerFirma') {
+            prikazSpan = document.getElementById('prikazIzabranihFirma');
+        }
+        
+        if (!prikazSpan) return;
+        
+        if (checked.length === 0) {
+            prikazSpan.innerHTML = 'nijedna';
+            return;
+        }
+        
+        const nazivi = [];
+        checked.forEach(cb => {
+            const label = cb.closest('label');
+            if (label) {
+                const tekst = label.textContent.trim();
+                nazivi.push(tekst);
+            }
+        });
+        
+        prikazSpan.innerHTML = nazivi.map(n => '<span class="izabrana-kategorija-tag">' + n + '</span>').join('');
+    }
+
+    function getIzabraneKategorije(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return [];
+        
+        const checked = container.querySelectorAll('.kategorija-checkbox:checked');
+        return Array.from(checked).map(cb => parseInt(cb.value));
+    }
+    
+    document.getElementById('tipNaloga').addEventListener('change', function() {
+        const tip = this.value;
+        
+        document.getElementById('majstorPoljaReg').style.display = 'none';
+        document.getElementById('firmaPoljaReg').style.display = 'none';
+        
+        if (tip === 'majstor') {
+            document.getElementById('majstorPoljaReg').style.display = 'block';
+            ucitajKategorijeHijerarhija('kategorijeContainerMajstor');
+        } else if (tip === 'firma') {
+            document.getElementById('firmaPoljaReg').style.display = 'block';
+            ucitajKategorijeHijerarhija('kategorijeContainerFirma');
+        }
+    });
+    
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const ime = document.getElementById('ime').value;
+        const prezime = document.getElementById('prezime').value;
+        const email = document.getElementById('email').value;
+        const telefon = document.getElementById('telefon').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const tipNaloga = document.getElementById('tipNaloga').value;
+        const termsCheckbox = document.getElementById('termsCheckbox').checked;
+        const alertDiv = document.getElementById('alertMessage');
+        
+        if (password.length < 8) {
+            alertDiv.innerHTML = '<div class="alert alert-danger">Lozinka mora imati najmanje 8 karaktera!</div>';
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alertDiv.innerHTML = '<div class="alert alert-danger">Lozinke se ne poklapaju!</div>';
+            return;
+        }
+        
+        if (!termsCheckbox) {
+            alertDiv.innerHTML = '<div class="alert alert-danger">Morate prihvatiti uslove koriscenja!</div>';
+            return;
+        }
+        
+        if (!ime || !prezime || !email || !password || !tipNaloga) {
+            alertDiv.innerHTML = '<div class="alert alert-danger">Popunite sva obavezna polja!</div>';
+            return;
+        }
+        
+        let userData = {
+            ime: ime,
+            prezime: prezime,
+            email: email,
+            telefon: telefon || "",
+            profilna_slika: "",
+            lozinka: password,
+            tip_korisnika: tipNaloga,
+        };
+        
+        if (tipNaloga === 'majstor') {
+            const pocetak = document.getElementById('pocetakRadnogVremena').value;
+            const kraj = document.getElementById('krajRadnogVremena').value;
+            const kategorijeIds = getIzabraneKategorije('kategorijeContainerMajstor');
+            
+            if (kategorijeIds.length === 0) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Morate izabrati bar jednu kategoriju usluge!</div>';
+                return;
+            }
+            if (!pocetak || !kraj) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Unesite radno vreme!</div>';
+                return;
+            }
+            if (pocetak >= kraj) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Početak radnog vremena mora biti pre kraja!</div>';
+                return;
+            }
+            
+            userData.kategorije = kategorijeIds;
+            userData.pocetak_radnog_vremena = pocetak + ":00";
+            userData.kraj_radnog_vremena = kraj + ":00";
+            
+        } else if (tipNaloga === 'firma') {
+            const naziv_firme = document.getElementById('naziv_firme').value;
+            const pocetak = document.getElementById('pocetakRadnogVremenaFirma').value;
+            const kraj = document.getElementById('krajRadnogVremenaFirma').value;
+            const kategorijeIds = getIzabraneKategorije('kategorijeContainerFirma');
+            const br_radnika_uk = document.getElementById('br_radnika_uk').value;
+            const br_radnika_dost = document.getElementById('br_radnika_dost').value;
+            
+            if (!naziv_firme) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Morate uneti naziv firme!</div>';
+                return;
+            }
+            if (kategorijeIds.length === 0) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Morate izabrati bar jednu kategoriju usluge!</div>';
+                return;
+            }
+            if (!pocetak || !kraj) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Unesite radno vreme!</div>';
+                return;
+            }
+            if (pocetak >= kraj) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Početak radnog vremena mora biti pre kraja!</div>';
+                return;
+            }
+            if (parseInt(br_radnika_dost) > parseInt(br_radnika_uk)) {
+                alertDiv.innerHTML = '<div class="alert alert-danger">Broj dostupnih radnika ne može biti veći od ukupnog broja!</div>';
+                return;
+            }
+            
+            userData.naziv_firme = naziv_firme;
+            userData.kategorije = kategorijeIds;
+            userData.pocetak_radnog_vremena = pocetak + ":00";
+            userData.kraj_radnog_vremena = kraj + ":00";
+            userData.broj_ukupnih_radnika = parseInt(br_radnika_uk) || 1;
+            userData.broj_dostupnih_radnika = parseInt(br_radnika_dost) || 0;
+        }
+        
+        alertDiv.innerHTML = '<div class="alert alert-info"><i class="fa-solid fa-spinner fa-spin"></i> Slanje podataka...</div>';
+        
+        try {
+            const result = await register(userData);
+            
+            if (result.success) {
+                
+                alertDiv.innerHTML = '<div class="alert alert-success">' + result.message + '</div>';
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } else {
+                alertDiv.innerHTML = '<div class="alert alert-danger">' + result.message + '</div>';
+            }
+        } catch (error) {
+            console.error('Greska:', error);
+            alertDiv.innerHTML = '<div class="alert alert-danger">Doslo je do greske. Pokusajte ponovo.</div>';
+        }
+    });
+</script>
+
+</body>
+</html>

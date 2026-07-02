@@ -1,0 +1,6 @@
+@Majstor_bob_HostAddress = http://localhost:5137
+
+GET {{Majstor_bob_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
